@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """This module contains the file storage class"""
 import os
 import json
-#from models.base_model import to_dict
 
 
 class FileStorage:
