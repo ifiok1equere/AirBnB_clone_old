@@ -92,7 +92,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, line):
         """Prints all string representation of all instances
-            based or not on the class name in a list"""
+        AOA    based or not on the class name in a list"""
         tokens = line.split()
         storage.reload()
         all_objs = storage.all()
@@ -122,13 +122,37 @@ class HBNBCommand(cmd.Cmd):
         storage.reload()
         all_objs = storage.all()
 
-        token_0_instances = {k: v for k, v in all_objs.items() if tokens[0] in k}
+        if not tokens:
+            print("** class name missing **")
+            return
+        if tokens[0] not in HBNBCommand.__model_list:
+            print("** class doesn't exist **")
+            return
+        if len(tokens) == 1:
+            print("** instance id missing **")
+            return
+        if len(tokens) == 2:
+            print("** attribute name missing **")
+            return
+        if len(tokens) == 3:
+            print("** valuue missing **")
+            return
+        cls_name, id_no, attr, val = tokens[0], tokens[1], tokens[2], tokens[3]
+        usr_id = cls_name + "." + id_no
+        if usr_id not in all_objs:
+            print("** no instance found **")
+            return
+        for k, v in all_objs.items():
+            if usr_id == k:
+                v[attr] = val
+                storage.save()
+        """token_0_instances = {k: v for k, v in all_objs.items() if tokens[0] in k}
         if tokens[2] in token_0_instances.keys() and token_0_instnaces[token2[2]]["id"] == tokens[1]:
             new_dict = {}
             new_dict[token[2]] = token[1]
             token_0_instances.update(new_dict)
             print(token_0_intances)
-            storage.save()
+            storage.save()"""
         '''Note: Not finished yet'''
 
         return
