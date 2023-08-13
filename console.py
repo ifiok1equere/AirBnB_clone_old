@@ -4,7 +4,7 @@ import cmd
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from models import storage
-
+from datetime import datetime
 
 class HBNBCommand(cmd.Cmd):
     '''
@@ -31,18 +31,17 @@ class HBNBCommand(cmd.Cmd):
         print('''This command exits a program\n''')
 
     def do_create(self, line):
-        # print("line: ", line)
-        # print(len(line))
         tokens = line.split()
         if not tokens:
             print("** class name missing **")
             return
-        if tokens[0] not in HBNBCommand.__model_list:
+        if len(tokens) == 1 and tokens[0] not in HBNBCommand.__model_list:
             print("** class doesn't exist **")
             return
-        #cls_name = tokens[0]
+        if len(tokens) > 1: 
+            print("** class doesn't exist **")
+            return
         obj = eval(tokens[0])()
-        print(obj)
         storage.new(obj)
         obj.save()
         print("{}".format(obj.id))
@@ -81,12 +80,13 @@ class HBNBCommand(cmd.Cmd):
         if len(tokens) == 1:
             print("** instance id missing **")
             return
+        usr_id = tokens[1]
         del_obj = tokens[0] + "." + usr_id
         storage.reload()
         if del_obj not in storage.all():
             print("** no instance found **")
         elif del_obj in storage.all():
-            del storage.all()[del_tok]
+            del storage.all()[del_obj]
             storage.save()
             return
 
@@ -95,20 +95,45 @@ class HBNBCommand(cmd.Cmd):
             based or not on the class name in a list"""
         tokens = line.split()
         storage.reload()
-        all_objs =storage.all()
+        all_objs = storage.all()
+        obj_list = []
+        new_obj_dict = {}
         if not tokens and all_objs:
-            print([value for value in all_objs.values()])
+            for key, value in all_objs.items():
+                to_obj = eval(value["__class__"])(**value)
+                del value["__class__"]
+                obj_list.append(str(to_obj))
+            print(obj_list)
         elif tokens:
-            all_instances = [v for k, v in all_objs.items()
-                            if tokens[0] in k]
-            if len(all_instances) == 0:
+            all_instances = {k: v for k, v in all_objs.items() if tokens[0] in k}
+            if not all_instances:
                 print("** class doesn't exist **")
             else:
-                print(all_instances)
+                for key, value in all_instances.items():
+                    to_obj = eval(tokens[0])(**value)
+                    obj_list.append(str(to_obj))
+                print(obj_list)
+        return
 
-    #def do_update(self, line):
-    #    """Updates an instance based on the class name
-    #        and id by adding or updating attribute"""
+    def do_update(self, line):
+        """Updates an instance based on the class name
+        and id by adding or updating attribute"""
+        tokens = line.split()
+        storage.reload()
+        all_objs = storage.all()
+
+        token_0_instances = {k: v for k, v in all_objs.items() if tokens[0] in k}
+        if tokens[2] in token_0_instances.keys() and token_0_instnaces[token2[2]]["id"] == tokens[1]:
+            new_dict = {}
+            new_dict[token[2]] = token[1]
+            token_0_instances.update(new_dict)
+            print(token_0_intances)
+            storage.save()
+        '''Note: Not finished yet'''
+
+        return
+
+
 
 
 if __name__ == "__main__":
