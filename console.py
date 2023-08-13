@@ -15,7 +15,7 @@ class HBNBCommand(cmd.Cmd):
     '''
 
     prompt = "(hbnb) "
-    __model_list = ["BaseModel"]
+    __model_list = ["BaseModel", "User"]
 
     def do_quit(self, line):
         return True
@@ -68,9 +68,10 @@ class HBNBCommand(cmd.Cmd):
         if show_obj not in all_inst:
             print("** no instance found **")
         else:
-            inst_dict = all_inst[show_obj]
-            obj = eval(inst_dict["__class__"])(**inst_dict)
-            print(str(obj))
+            #inst_dict = all_inst[show_obj]
+            #obj = eval(inst_dict["__class__"])(**inst_dict)
+            #print(str(obj))
+            print(str(all_inst[show_obj]))
             return
 
     def do_destroy(self, line):
@@ -105,9 +106,9 @@ class HBNBCommand(cmd.Cmd):
         new_obj_dict = {}
         if not tokens and all_objs:
             for key, value in all_objs.items():
-                to_obj = eval(value["__class__"])(**value)
-                del value["__class__"]
-                obj_list.append(str(to_obj))
+                #to_obj = eval(value["__class__"])(**value)
+                #del value["__class__"]
+                obj_list.append(str(value))
             print(obj_list)
         elif tokens:
             all_instanc = {k: v for k, v in all_objs.items() if tokens[0] in k}
@@ -115,8 +116,9 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
             else:
                 for key, value in all_instanc.items():
-                    to_obj = eval(tokens[0])(**value)
-                    obj_list.append(str(to_obj))
+                    #to_obj = eval(tokens[0])(**value)
+                    #obj_list.append(str(to_obj))
+                    obj_list.append(str(value))
                 print(obj_list)
         return
 
@@ -149,7 +151,8 @@ class HBNBCommand(cmd.Cmd):
             return
         for k, v in all_objs.items():
             if usr_id == k:
-                v[attr] = val
+                setattr(v, attr, val)
+
                 storage.save()
 
 
