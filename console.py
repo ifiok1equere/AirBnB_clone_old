@@ -162,4 +162,8 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == "__main__":
-    HBNBCommand().cmdloop()
+    if len(sys.argv) > 1:
+        cmd_line_input = " ".join(sys.argv[1:])
+        HBNBCommand().onecmd(cmd_line_input)
+    else:
+        HBNBCommand().cmdloop()
