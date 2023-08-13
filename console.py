@@ -6,6 +6,7 @@ from models.engine.file_storage import FileStorage
 from models import storage
 from datetime import datetime
 
+
 class HBNBCommand(cmd.Cmd):
     '''
     This class defines the console of our program
@@ -38,7 +39,7 @@ class HBNBCommand(cmd.Cmd):
         if len(tokens) == 1 and tokens[0] not in HBNBCommand.__model_list:
             print("** class doesn't exist **")
             return
-        if len(tokens) > 1: 
+        if len(tokens) > 1:
             print("** class doesn't exist **")
             return
         obj = eval(tokens[0])()
@@ -61,7 +62,7 @@ class HBNBCommand(cmd.Cmd):
             return
         show_obj = tokens[0] + "." + tokens[1]
         storage.reload()
-        #print(storage.all())
+        # print(storage.all())
         if show_obj not in storage.all():
             print("** no instance found **")
         else:
@@ -105,11 +106,11 @@ class HBNBCommand(cmd.Cmd):
                 obj_list.append(str(to_obj))
             print(obj_list)
         elif tokens:
-            all_instances = {k: v for k, v in all_objs.items() if tokens[0] in k}
-            if not all_instances:
+            all_instanc = {k: v for k, v in all_objs.items() if tokens[0] in k}
+            if not all_instanc:
                 print("** class doesn't exist **")
             else:
-                for key, value in all_instances.items():
+                for key, value in all_instanc.items():
                     to_obj = eval(tokens[0])(**value)
                     obj_list.append(str(to_obj))
                 print(obj_list)
@@ -156,8 +157,6 @@ class HBNBCommand(cmd.Cmd):
         '''Note: Not finished yet'''
 
         return
-
-
 
 
 if __name__ == "__main__":
