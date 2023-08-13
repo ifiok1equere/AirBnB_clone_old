@@ -25,12 +25,13 @@ class FileStorage:
 
     def save(self):
         """Serializes `__objects` to the JSON file"""
-        with open(self.__file_path, "w", encoding="utf-8") as f:
-            json.dump(self.__objects, f)
+        obj_dict = {}
+        with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
+            json.dump(FileStorage.__objects, f)
 
     def reload(self):
         """Deserializes JSON to the `__objects`"""
-        if not os.path.exists(self.__file_path):
+        if not os.path.exists(FileStorage.__file_path):
             return
-        with open(self.__file_path, "r", encoding="utf-8") as f:
-            FileStorage.__objects = json.load(f)
+        with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
+                FileStorage.__objects = json.load(f)

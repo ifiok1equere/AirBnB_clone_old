@@ -2,6 +2,7 @@
 ''' This module defines the console of this project '''
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models.engine.file_storage import FileStorage
 from models import storage
 from datetime import datetime
@@ -62,11 +63,14 @@ class HBNBCommand(cmd.Cmd):
             return
         show_obj = tokens[0] + "." + tokens[1]
         storage.reload()
+        all_inst = storage.all()
         # print(storage.all())
-        if show_obj not in storage.all():
+        if show_obj not in all_inst:
             print("** no instance found **")
         else:
-            print("{}".format(storage.all()[show_obj]))
+            inst_dict = all_inst[show_obj]
+            obj = eval(inst_dict["__class__"])(**inst_dict)
+            print(str(obj))
             return
 
     def do_destroy(self, line):
@@ -138,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
         if len(tokens) == 3:
             print("** valuue missing **")
             return
-        cls_name, id_no, attr, val = tokens[0], tokens[1], tokens[2], tokens[3]
+        cls_name, id_no, attr, val = tokens[0], tokens[1], tokens[2], tokens[3].strip('"')
         usr_id = cls_name + "." + id_no
         if usr_id not in all_objs:
             print("** no instance found **")
@@ -147,16 +151,6 @@ class HBNBCommand(cmd.Cmd):
             if usr_id == k:
                 v[attr] = val
                 storage.save()
-        """token_0_instances = {k: v for k, v in all_objs.items() if tokens[0] in k}
-        if tokens[2] in token_0_instances.keys() and token_0_instnaces[token2[2]]["id"] == tokens[1]:
-            new_dict = {}
-            new_dict[token[2]] = token[1]
-            token_0_instances.update(new_dict)
-            print(token_0_intances)
-            storage.save()"""
-        '''Note: Not finished yet'''
-
-        return
 
 
 if __name__ == "__main__":
