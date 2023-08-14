@@ -3,7 +3,6 @@
 import uuid
 from datetime import datetime
 from models import storage
-#from engine.file_storage import FileStorage
 
 
 class BaseModel:
@@ -20,9 +19,8 @@ class BaseModel:
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
         if kwargs:
-            #del kwargs["__class__"]
             for attr, value in kwargs.items():
-                if  attr == "__class__":
+                if attr == "__class__":
                     continue
                 elif attr == "created_at" or attr == "updated_at":
                     new_attr_value = datetime.fromisoformat(kwargs[attr])

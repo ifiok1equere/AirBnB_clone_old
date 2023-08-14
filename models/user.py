@@ -9,7 +9,3 @@ class User(BaseModel):
     password = ""
     first_name = ""
     last_name = ""
-
-   # def __init__(self):
-        #"""Initializes a user object with specified attributes"""
-        # super().__init__()

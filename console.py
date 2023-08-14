@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 ''' This module defines the console of this project '''
 import cmd
+import sys
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -160,6 +161,9 @@ class HBNBCommand(cmd.Cmd):
 
                 storage.save()
 
-
 if __name__ == "__main__":
-    HBNBCommand().cmdloop()
+    if len(sys.argv) > 1:
+        command_line_input = " ".join(sys.argv[1:])
+        HBNBCommand().onecmd(command_line_input)
+    else:
+        HBNBCommand().cmdloop()
