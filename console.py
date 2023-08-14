@@ -162,8 +162,4 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        command_line_input = " ".join(sys.argv[1:])
-        HBNBCommand().onecmd(command_line_input)
-    else:
-        HBNBCommand().cmdloop()
+    HBNBCommand().cmdloop()
