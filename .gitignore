@@ -1,4 +1,5 @@
-*.pyc  2 test_base_model.py
+*.pyc
+test_base_model.py
 test_save_reload_base_model.py
 test_base_model_dict.py
 test_save_reload_user.py
