@@ -21,7 +21,8 @@ class HBNBCommand(cmd.Cmd):
     '''
 
     prompt = "(hbnb) "
-    __model_list = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
+    __model_list = ["BaseModel", "User", "State", "City",
+                    "Amenity", "Place", "Review"]
 
     def do_quit(self, line):
         return True
@@ -71,13 +72,9 @@ class HBNBCommand(cmd.Cmd):
         show_obj = tokens[0] + "." + tokens[1]
         storage.reload()
         all_inst = storage.all()
-        # print(storage.all())
         if show_obj not in all_inst:
             print("** no instance found **")
         else:
-            #inst_dict = all_inst[show_obj]
-            #obj = eval(inst_dict["__class__"])(**inst_dict)
-            #print(str(obj))
             print(str(all_inst[show_obj]))
             return
 
@@ -113,8 +110,6 @@ class HBNBCommand(cmd.Cmd):
         new_obj_dict = {}
         if not tokens and all_objs:
             for key, value in all_objs.items():
-                #to_obj = eval(value["__class__"])(**value)
-                #del value["__class__"]
                 obj_list.append(str(value))
             print(obj_list)
         elif tokens:
@@ -123,8 +118,6 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
             else:
                 for key, value in all_instanc.items():
-                    #to_obj = eval(tokens[0])(**value)
-                    #obj_list.append(str(to_obj))
                     obj_list.append(str(value))
                 print(obj_list)
         return
@@ -151,7 +144,8 @@ class HBNBCommand(cmd.Cmd):
         if len(tokens) == 3:
             print("** valuue missing **")
             return
-        cls_name, id_no, attr, val = tokens[0], tokens[1], tokens[2], tokens[3].strip('"')
+        cls_name, id_no, attr, val = tokens[0], tokens[1], tokens[2],\
+            tokens[3].strip('"')
         usr_id = cls_name + "." + id_no
         if usr_id not in all_objs:
             print("** no instance found **")

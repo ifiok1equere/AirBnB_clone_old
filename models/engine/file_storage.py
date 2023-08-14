@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """This module contains the file storage class"""
 import os
 import json
-#from models.base_model import to_dict
 
 
 class FileStorage:
@@ -43,7 +42,7 @@ class FileStorage:
         from models.place import Place
         from models.review import Review
         with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
-                obj_dict = json.load(f)
-                for k ,v in obj_dict.items():
-                    obj_inst = eval(v["__class__"])(**v)
-                    FileStorage.__objects[k] = obj_inst
+            obj_dict = json.load(f)
+            for k, v in obj_dict.items():
+                obj_inst = eval(v["__class__"])(**v)
+                FileStorage.__objects[k] = obj_inst
