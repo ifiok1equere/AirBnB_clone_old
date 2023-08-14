@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 ''' This module defines the console of this project '''
 import cmd
+import sys
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -38,6 +39,7 @@ class HBNBCommand(cmd.Cmd):
         print('''This command exits a program\n''')
 
     def do_create(self, line):
+        """Creates a new instance of the specified class"""
         tokens = line.split()
         if not tokens:
             print("** class name missing **")
