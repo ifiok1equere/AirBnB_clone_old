@@ -157,14 +157,33 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
         return
 
+    def do_count(self, line):
+        """Retrieves the number of instances of a class"""
+        tokens = line.split()
+        storage.reload()
+        all_objs = storage.all()
+
+        if not tokens:
+            print("** class name missing **")
+            return
+        if tokens[0] not in HBNBCommand.__model_list:
+            print("** class doesn't exist **")
+            return
+        cls_name = tokens[0]
+        inst = [obj for obj in all_objs.values() if
+                type(obj).__name__ == cls_name]
+        print(len(inst))
+        return
+
     def default(self, line):
         """Defines a regex to match '<class name>.all()'"""
-        str_to_match = r"(\w+)\.all\(\)"
+        str_to_match = r"(\w+)\.(\w+)\(\)"
         match = re.match(str_to_match, line)
 
         if match:
             cls_name = match.group(1)
-            command = "all " + cls_name
+            cmd_frm_str = match.group(2)
+            command = cmd_frm_str + " " + cls_name
 
             self.onecmd(command)
         else:
