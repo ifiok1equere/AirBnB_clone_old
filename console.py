@@ -2,6 +2,7 @@
 ''' This module defines the console of this project '''
 import cmd
 import sys
+import re
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -153,8 +154,22 @@ class HBNBCommand(cmd.Cmd):
         for k, v in all_objs.items():
             if usr_id == k:
                 setattr(v, attr, val)
-
                 storage.save()
+        return
+
+    def default(self, line):
+        """Defines a regex to match '<class name>.all()'"""
+        str_to_match = r"(\w+)\.all\(\)"
+        match = re.match(str_to_match, line)
+
+        if match:
+            cls_name = match.group(1)
+            command = "all " + cls_name
+
+            self.onecmd(command)
+        else:
+            print("*** Unknown syntax: ", line)
+        return
 
 
 if __name__ == "__main__":
