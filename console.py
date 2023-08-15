@@ -177,7 +177,12 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """Defines a regex to match '<class name>.all()'"""
-        str_to_match = r'(\w+)\.(\w+)\([\'|"]?([\w-]+)?[\'|"]?,? ?[\'|"]?(\w+)?[\'|"]?,? ?[\'|"]?([-%_+\w\d@\.]+)?[\'|"]?\)'
+        str_to_match = (
+                r'(\w+)\.(\w+)'
+                r'\([\'|"]?([\w-]+)?[\'|"]?,? ?'
+                r'[\'|"]?(\w+)?[\'|"]?,? ?'
+                r'[\'|"]?([-%_+\w\d@\.]+)?[\'|"]?\)'
+                )
         match = re.match(str_to_match, line)
 
         if match:
@@ -186,6 +191,7 @@ class HBNBCommand(cmd.Cmd):
             obj_id = match.group(3) or ""
             atr_name = match.group(4) or ""
             atr_val = match.group(5) or ""
+            # kwargs = match.group(6) or ""
             command = f"{cmd_frm_str} {cls_name} {obj_id} {atr_name} {atr_val}"
 
             self.onecmd(command)
