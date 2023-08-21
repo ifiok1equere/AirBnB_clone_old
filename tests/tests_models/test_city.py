@@ -24,7 +24,7 @@ class TestCity(unittest.TestCase):
         self.assertEqual(city2.name, "")
         self.assertIsInstance(city1, BaseModel)
         self.assertIsInstance(city2, BaseModel)
-        self.assertIsInstance(city, City)
+        self.assertIsInstance(city1, City)
         self.assertIsInstance(city2, City)
         self.assertEqual(city1.name, city2.name)
         self.assertEqual(city1.state_id, city2.state_id)
